@@ -1,4 +1,3 @@
-
 import streamlit as st
 from content_based_filtering import content_recommendation
 from scipy.sparse import load_npz

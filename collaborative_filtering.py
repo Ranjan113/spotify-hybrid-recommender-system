@@ -18,8 +18,6 @@ def filter_songs_data(songs_data: pd.DataFrame, track_ids: list, save_df_path: s
 
     # filter data based on track_ids
     filtered_data = songs_data[songs_data["track_id"].isin(track_ids)]
-    # sort the data by track id
-    filtered_data.sort_values(by="track_id", inplace=True)
     # rest index
     filtered_data.reset_index(drop=True, inplace=True)
     # save the data
@@ -29,16 +27,12 @@ def filter_songs_data(songs_data: pd.DataFrame, track_ids: list, save_df_path: s
 
 
 def save_pandas_data_to_csv(data: pd.DataFrame, file_path: str) -> None:
-    """
-    Save the data to a csv file
-    """
+
     data.to_csv(file_path, index=False)
     
     
 def save_sparse_matrix(matrix: csr_matrix, file_path: str) -> None:
-    """
-    Save the sparse matrix to a npz file
-    """
+
     save_npz(file_path, matrix)
 
 
