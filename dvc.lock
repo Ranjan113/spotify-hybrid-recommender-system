@@ -9,13 +9,13 @@ stages:
       size: 14985870
     - path: data_cleaning.py
       hash: md5
-      md5: 41cdd89f2d8c793707e14e19d62247d9
-      size: 893
+      md5: 5f213dc5101dbb4dafd16a71449b8a25
+      size: 891
     outs:
     - path: data/cleaned_data.csv
       hash: md5
-      md5: 617eeae80f7d95ecff53dc573bccb472
-      size: 13658961
+      md5: 7fbb771c077fdaea5e7a04d1bed27d6e
+      size: 13661498
   transform_data:
     cmd: python content_based_filtering.py
     deps:
@@ -25,41 +25,41 @@ stages:
       size: 3458
     - path: data/cleaned_data.csv
       hash: md5
-      md5: 617eeae80f7d95ecff53dc573bccb472
-      size: 13658961
+      md5: 7fbb771c077fdaea5e7a04d1bed27d6e
+      size: 13661498
     - path: data_cleaning.py
       hash: md5
-      md5: 41cdd89f2d8c793707e14e19d62247d9
-      size: 893
+      md5: 5f213dc5101dbb4dafd16a71449b8a25
+      size: 891
     outs:
     - path: data/transformed_data.npz
       hash: md5
-      md5: 01adcf8fcfb4b113d99fd955a667b2c1
-      size: 4522835
+      md5: 27ff831222d224e46b359653fa635817
+      size: 4523503
     - path: transformer.joblib
       hash: md5
-      md5: 482e1939d8aff6c685ca0a15c06ec1b3
+      md5: 28e2a80e4661e93cdd2f9d9294670a0c
       size: 135581
   interaction_data:
     cmd: python collaborative_filtering.py
     deps:
     - path: collaborative_filtering.py
       hash: md5
-      md5: 37b2832cf4850032ddf3a980ffad51be
-      size: 4942
+      md5: f1d98b99fb86cfa19eb93f7a9ac4f46c
+      size: 5033
     - path: data/User Listening History.csv
       hash: md5
       md5: 3a12e713844195171c7040c051d6d4ae
       size: 602515573
     - path: data/cleaned_data.csv
       hash: md5
-      md5: 617eeae80f7d95ecff53dc573bccb472
-      size: 13658961
+      md5: 7fbb771c077fdaea5e7a04d1bed27d6e
+      size: 13661498
     outs:
     - path: data/collab_filtered_data.csv
       hash: md5
-      md5: 1f0e5855745925da1f450d3ad88cf79a
-      size: 8229469
+      md5: 84803c328fa4a48034e534465d70b04a
+      size: 8230000
     - path: data/interaction_matrix.npz
       hash: md5
       md5: 4bfb0e3c09377c213e1a32d13264400c
@@ -68,3 +68,19 @@ stages:
       hash: md5
       md5: 4a52e4cb6bae6b0126c1344dac7c7686
       size: 640058
+  transformed_filtered_data:
+    cmd: python transform_filtered_data.py
+    deps:
+    - path: data/collab_filtered_data.csv
+      hash: md5
+      md5: 84803c328fa4a48034e534465d70b04a
+      size: 8230000
+    - path: transform_filtered_data.py
+      hash: md5
+      md5: d4df2d151f1aa5b985ac7c13253af6e9
+      size: 742
+    outs:
+    - path: data/transformed_hybrid_data.npz
+      hash: md5
+      md5: 4446d9b4868811939627ce89788fe6cb
+      size: 2977337
