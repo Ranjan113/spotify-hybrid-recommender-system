@@ -59,11 +59,13 @@ def calculate_similarity_scores(input_vector, data):
     return similarity_scores
 
 
-def recommend(song_name, songs_data, transformed_data, k=10):
+def content_recommendation(song_name,artist_name, songs_data, transformed_data, k=10):
     # convert song name to lowercase
     song_name = song_name.lower()
+    # convert artist name to lower
+    artist_name = artist_name.lower()
     # filter out the song from data
-    song_row = songs_data.loc[songs_data["name"] == song_name]
+    song_row = songs_data.loc[(songs_data["name"] == song_name) & (songs_data["artist"] == artist_name)]
     # get the index of song
     song_index = song_row.index[0]
     # generate the input vector
@@ -78,7 +80,7 @@ def recommend(song_name, songs_data, transformed_data, k=10):
     top_k_list = top_k_songs_names[['name','artist','spotify_preview_url']].reset_index(drop=True)
     return top_k_list
 
-def main(data_path, song_name, k=10):
+def main(data_path, k=10):
     # convert song name to lowercase
     song_name = song_name.lower()
     # load the data
@@ -107,4 +109,4 @@ def main(data_path, song_name, k=10):
     print(top_k_songs_names)
     
 if __name__ == "__main__":
-    main(CLEANED_DATA_PATH, "Hips Don't Lie")
+    main(CLEANED_DATA_PATH)
