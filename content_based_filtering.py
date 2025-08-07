@@ -80,9 +80,7 @@ def content_recommendation(song_name,artist_name, songs_data, transformed_data, 
     top_k_list = top_k_songs_names[['name','artist','spotify_preview_url']].reset_index(drop=True)
     return top_k_list
 
-def main(data_path, k=10):
-    # convert song name to lowercase
-    song_name = song_name.lower()
+def main(data_path):
     # load the data
     data = pd.read_csv(data_path)
     # clean the data
@@ -93,20 +91,6 @@ def main(data_path, k=10):
     transformed_data = transform_data(data_content_filtering)
     #save transformed data
     save_transformed_data(transformed_data,"data/transformed_data.npz")
-    # filter out the song from data
-    song_row = data.loc[data["name"] == song_name]
-    # get the index of song
-    song_index = song_row.index[0]
-    # generate the input vector
-    input_vector = transformed_data[song_index].reshape(1,-1)
-    # calculate similarity scores
-    similarity_scores = calculate_similarity_scores(input_vector, transformed_data)
-    # get the top k songs
-    top_k_songs_indexes = np.argsort(similarity_scores.ravel())[-k-1:-1][::-1]
-    # get the top k songs names
-    top_k_songs_names = data.iloc[top_k_songs_indexes]
-    # print the top k songs
-    print(top_k_songs_names)
     
 if __name__ == "__main__":
     main(CLEANED_DATA_PATH)
